@@ -7,9 +7,37 @@ user:
   email: "your.email@example.com"
   github: "Randallsm83"
 
-# Package lists for automated installation
+# Shell preferences
+shell: "pwsh"  # pwsh (PowerShell), wsl, zsh, bash
 
-# Windows scoop packages (CLI tools - no admin required)
+# Package lists for automated installation
+packages:
+  scoop:
+    - git
+    - gh
+    - lazygit
+    - chezmoi
+    - mise
+    - starship
+    - zoxide
+    - fzf
+    - ripgrep
+    - fd
+    - bat
+    - eza
+    - vivid
+    - delta
+    - jq
+    - yq
+    - neovim
+    - make
+    - zig
+    - curl
+    - wget
+    - 7zip
+    - btop
+
+# Windows scoop packages (CLI tools - no admin required) - DEPRECATED, use packages.scoop
 scoop_packages:
   # Version control
   - git
@@ -112,6 +140,7 @@ mise_global_tools:
 
 # Theme colors (for reference in configs)
 theme:
+  name: "spaceduck"  # Active theme: spaceduck, onedark
   spaceduck:
     background: "#0f111b"
     foreground: "#ecf0c1"
