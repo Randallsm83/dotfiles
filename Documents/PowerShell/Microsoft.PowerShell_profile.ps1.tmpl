@@ -1,0 +1,108 @@
+{{- if eq .chezmoi.os "windows" -}}
+# PowerShell Profile - Managed by chezmoi
+# Last updated: {{ now | date "2006-01-02" }}
+
+# XDG Base Directory specification (set by bootstrap, but verify they exist)
+# These should already be set by bootstrap.ps1
+# $env:XDG_CONFIG_HOME = "$HOME\.config"
+# $env:XDG_DATA_HOME = "$HOME\.local\share"
+# $env:XDG_STATE_HOME = "$HOME\.local\state"
+# $env:XDG_CACHE_HOME = "$HOME\.cache"
+
+# Initialize Starship prompt
+Invoke-Expression (&starship init powershell)
+
+# Initialize Mise (tool version manager)
+Invoke-Expression (& mise activate pwsh | Out-String)
+
+# Initialize Zoxide (smart cd)
+Invoke-Expression (& zoxide init powershell | Out-String)
+
+# Set LS_COLORS using Vivid ({{ .theme.name }} theme)
+{{- if .packages.scoop | has "vivid" }}
+$env:LS_COLORS = (vivid generate {{ .theme.name }})
+{{- end }}
+
+# Aliases - Modern CLI replacements
+Set-Alias -Name ll -Value Get-ChildItem -Option AllScope
+Set-Alias -Name la -Value Get-ChildItem -Option AllScope
+{{- if .packages.scoop | has "ripgrep" }}
+Set-Alias -Name grep -Value rg -Option AllScope
+{{- end }}
+{{- if .packages.scoop | has "bat" }}
+Set-Alias -Name cat -Value bat -Option AllScope
+{{- end }}
+{{- if .packages.scoop | has "eza" }}
+Set-Alias -Name ls -Value eza -Option AllScope
+{{- end }}
+
+# PSReadLine configuration - Vi mode with enhanced history
+if (Get-Module -ListAvailable -Name PSReadLine) {
+    Import-Module PSReadLine
+    
+    # Vi mode
+    Set-PSReadLineOption -EditMode Vi
+    
+    # History settings
+    Set-PSReadLineOption -HistorySearchCursorMovesToEnd
+    Set-PSReadLineOption -HistorySaveStyle SaveIncrementally
+    Set-PSReadLineOption -MaximumHistoryCount 10000
+    
+    # Predictive IntelliSense
+    Set-PSReadLineOption -PredictionSource History
+    Set-PSReadLineOption -PredictionViewStyle ListView
+    
+    # Key bindings
+    Set-PSReadLineKeyHandler -Key UpArrow -Function HistorySearchBackward
+    Set-PSReadLineKeyHandler -Key DownArrow -Function HistorySearchForward
+    Set-PSReadLineKeyHandler -Key Tab -Function MenuComplete
+    Set-PSReadLineKeyHandler -Key Ctrl+d -Function DeleteCharOrExit
+}
+
+# Git shortcuts
+function gs { git status }
+function gp { git push }
+function gl { git pull }
+function ga { git add $args }
+function gc { git commit -m $args }
+function gco { git checkout $args }
+function gb { git branch $args }
+function gd { git diff }
+function gds { git diff --staged }
+function glog { git log --oneline --graph --decorate }
+
+# Enhanced ls functions using eza
+{{- if .packages.scoop | has "eza" }}
+function ll { eza -l --icons --git $args }
+function la { eza -la --icons --git $args }
+function lt { eza -T --icons --git-ignore $args }
+function llt { eza -lT --icons --git-ignore $args }
+{{- end }}
+
+# Utility functions
+function which ($command) {
+    Get-Command -Name $command -ErrorAction SilentlyContinue |
+        Select-Object -ExpandProperty Path -ErrorAction SilentlyContinue
+}
+
+function touch ($file) {
+    if (Test-Path $file) {
+        (Get-Item $file).LastWriteTime = Get-Date
+    } else {
+        New-Item -ItemType File -Path $file | Out-Null
+    }
+}
+
+function mkcd ($path) {
+    New-Item -ItemType Directory -Path $path -Force | Out-Null
+    Set-Location $path
+}
+
+# 1Password SSH Agent integration
+{{- if .features.setup_1password }}
+$env:SSH_AUTH_SOCK = "\\.\pipe\openssh-ssh-agent"
+{{- end }}
+
+# Welcome message (optional - comment out if you prefer clean startup)
+# Write-Host "PowerShell $($PSVersionTable.PSVersion) - Welcome, {{ .user.name }}!" -ForegroundColor Cyan
+{{- end -}}
