@@ -1,0 +1,174 @@
+{
+  "workbench.colorTheme": "One Dark Pro Night Flat",
+  "workbench.preferredDarkColorTheme": "One Dark Pro Night Flat",
+  "workbench.iconTheme": "a-file-icon-vscode",
+  "workbench.productIconTheme": "a-file-icon-vscode-product-icon-theme",
+  "oneDarkPro.editorTheme": "One Dark Pro Night Flat",
+  "oneDarkPro.vivid": true,
+  "editor.fontFamily": "FiraCode Nerd Font, Hack Nerd Font, Consolas, 'Courier New', monospace",
+  "editor.fontSize": 14,
+  "editor.lineHeight": 1.4,
+  "editor.fontWeight": "normal",
+  "editor.fontLigatures": true,
+  "editor.codeLensFontFamily": "FiraCode Nerd Font, Hack Nerd Font, Consolas, 'Courier New', monospace",
+  "editor.codeLensFontSize": 13,
+  "terminal.integrated.fontFamily": "FiraCode Nerd Font, Hack Nerd Font, Consolas, 'Courier New', monospace",
+  "terminal.integrated.fontSize": 13,
+  "terminal.integrated.lineHeight": 1.2,
+  "terminal.integrated.fontWeight": "normal",
+  "terminal.integrated.fontLigatures.enabled": true,
+  "editor.autoIndentOnPaste": true,
+  "editor.detectIndentation": true,
+  "editor.formatOnPaste": true,
+  "editor.insertSpaces": true,
+  "editor.tabSize": 4,
+  "editor.trimAutoWhitespace": true,
+  "editor.wordWrap": "on",
+  "editor.wrappingStrategy": "simple",
+  "editor.cursorStyle": "line",
+  "editor.cursorWidth": 2,
+  "editor.cursorBlinking": "blink",
+  "editor.cursorSurroundingLines": 5,
+  "editor.cursorSmoothCaretAnimation": "on",
+  "editor.guides.bracketPairs": true,
+  "editor.renderControlCharacters": false,
+  "editor.renderLineHighlight": "line",
+  "editor.renderWhitespace": "selection",
+  "editor.occurrencesHighlight": "singleFile",
+  "editor.selectionHighlight": false,
+  "editor.hover.delay": 300,
+  "editor.hover.enabled": true,
+  "editor.suggest.preview": true,
+  "editor.screenReaderAnnounceInlineSuggestion": false,
+  "editor.codeLens": false,
+  "editor.aiStats.enabled": true,
+  "editor.semanticHighlighting.enabled": true,
+  "editor.minimap.size": "fill",
+  "editor.smoothScrolling": true,
+  "editor.mouseWheelScrollSensitivity": 2,
+  "editor.experimentalGpuAcceleration": "on",
+  "editor.accessibilitySupport": "off",
+  "workbench.startupEditor": "none",
+  "workbench.list.smoothScrolling": true,
+  "workbench.list.openMode": "doubleClick",
+  "workbench.enableExperiments": false,
+  "window.menuBarVisibility": "compact",
+  "breadcrumbs.enabled": true,
+  "files.trimTrailingWhitespace": true,
+  "files.eol": "\n",
+  "files.watcherExclude": {
+    "**/.git/objects/**": true,
+    "**/.git/subtree-cache/**": true,
+    "**/node_modules/*/**": true,
+    "**/.hg/store/**": true,
+    "**/vendor/**": true,
+    "**/dist/**": true,
+    "**/build/**": true,
+    "**/.cache/**": true
+  },
+  "[perl]": {
+    "editor.insertSpaces": false
+  },
+  "[markdown]": {
+    "editor.wordWrap": "wordWrapColumn",
+    "editor.wordWrapColumn": 100,
+    "editor.rulers": [100, 120]
+  },
+  "markdown-preview-enhanced.previewTheme": "one-dark.css",
+  "markdown-preview-enhanced.revealjsTheme": "night.css",
+  "todohighlight.isEnable": true,
+  "cSpell.userWords": [
+    "BAAI",
+    "Dreamhost",
+    "Getopt",
+    "modelcontextprotocol",
+    "ondemand",
+    "Proservice",
+    "proservices",
+    "qdrant",
+    "sequentialthinking"
+  ],
+  "remote.SSH.configFile": "~/.ssh/config",
+  "remote.SSH.connectTimeout": 60,
+  "remote.restoreForwardedPorts": false,
+  "remote.autoForwardPorts": false,
+  "extensions.experimental.affinity": {
+    "vscodevim.vim": 1,
+    "asvetliakov.vscode-neovim": 1
+  },
+  "vim.leader": "<space>",
+  "vim.smartRelativeLine": true,
+  "vim.useSystemClipboard": true,
+  "vim.easymotion": true,
+  "vim.incsearch": true,
+  "vim.hlsearch": true,
+  "vim.useCtrlKeys": true,
+  "vim.mouseSelectionGoesIntoVisualMode": false,
+  "vim.enableNeovim": false,
+  "vim.neovimUseConfigFile": true,
+  "vim.handleKeys": {},
+  "vim.insertModeKeyBindings": [
+    {
+      "before": ["j", "j"],
+      "after": ["<Esc>"]
+    }
+  ],
+  "vim.normalModeKeyBindings": [
+    {
+      "before": [";"],
+      "after": [":"]
+    }
+  ],
+  "vim.normalModeKeyBindingsNonRecursive": [
+    {
+      "before": ["<leader>", "d"],
+      "after": ["d", "d"]
+    },
+    {
+      "before": ["<Esc>"],
+      "after": ["<Esc>"],
+      "commands": [{"command": ":nohl"}]
+    },
+    {
+      "before": ["<leader>", "q"],
+      "commands": [{"command": "workbench.actions.view.problems"}]
+    },
+    {
+      "before": ["<leader>", "t"],
+      "commands": [{"command": "workbench.actions.view.terminal"}]
+    },
+    {
+      "before": ["<C-h>"],
+      "commands": [{"command": "workbench.action.focusLeftGroup"}]
+    },
+    {
+      "before": ["<C-j>"],
+      "commands": [{"command": "workbench.action.focusBelowGroup"}]
+    },
+    {
+      "before": ["<C-k>"],
+      "commands": [{"command": "workbench.action.focusAboveGroup"}]
+    },
+    {
+      "before": ["<C-l>"],
+      "commands": [{"command": "workbench.action.focusRightGroup"}]
+    }
+  ],
+  "vim.commandLineModeKeyBindings": [],
+  "vim.commandLineModeKeyBindingsNonRecursive": [],
+  "update.mode": "start",
+  "diffEditor.maxComputationTime": 0,
+  "git.openRepositoryInParentFolders": "never",
+  "extensions.supportNodeGlobalNavigator": true,
+  "telemetry.feedback.enabled": false,
+  "telemetry.telemetryLevel": "off",
+  "chat.mcp.gallery.enabled": true,
+  "chat.mcp.discovery.enabled": {
+    "claude-desktop": true,
+    "windsurf": true,
+    "cursor-global": true,
+    "cursor-workspace": true
+  },
+  "settingsSync.enable": false,
+  "settingsSync.ignoredSettings": []
+}
