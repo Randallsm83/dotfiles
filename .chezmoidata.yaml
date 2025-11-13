@@ -1,0 +1,191 @@
+# Chezmoi data file
+# https://www.chezmoi.io/user-guide/manage-machine-to-machine-differences/
+
+# User information
+user:
+  name: "Randall"
+  email: "your.email@example.com"
+  github: "Randallsm83"
+
+# Package lists for automated installation
+
+# Windows scoop packages (CLI tools - no admin required)
+scoop_packages:
+  # Version control
+  - git
+  - gh
+  - lazygit
+  
+  # Core utilities
+  - chezmoi
+  - mise
+  - starship
+  - zoxide
+  - fzf
+  - ripgrep
+  - fd
+  - bat
+  - eza
+  - vivid
+  - delta
+  - jq
+  - yq
+  
+  # Development tools
+  - neovim
+  - make
+  - zig
+  - curl
+  - wget
+  - 7zip
+  
+  # System monitoring
+  - btop
+
+# Windows winget packages (GUI apps and tools requiring admin)
+winget_packages:
+  # Core development
+  - Git.Git  # Includes Git Credential Manager
+  - Microsoft.PowerShell
+  - Microsoft.WindowsTerminal
+  - wez.wezterm
+  - Warp.Warp  # Warp terminal
+  
+  # Editors
+  - Microsoft.VisualStudioCode
+  
+  # Utilities
+  - 7zip.7zip
+
+# Mise-managed tools (cross-platform CLI tools via cargo)
+# Used on Linux/WSL/macOS, not Windows (scoop handles these)
+mise_cli_tools:
+  - ripgrep
+  - fd-find
+  - bat
+  - eza
+  - git-delta
+  - bottom  # btop alternative
+  - starship
+  - zoxide
+
+# Homebrew packages (macOS)
+homebrew_packages:
+  # Terminals
+  - warp
+  - wezterm
+  
+  # Core utilities (if not using mise)
+  - starship
+  - zoxide
+  - fzf
+  - ripgrep
+  - fd
+  - bat
+  - eza
+  - git-delta
+  - btop
+  
+  # Development
+  - neovim
+  - gh
+  - lazygit
+
+# Language runtimes (mise manages these on all platforms)
+mise_runtimes:
+  node: "lts"
+  python: "3.12"
+  ruby: "latest"
+  perl: "latest"
+  go: "latest"
+  rust: "stable"
+  lua: "latest"
+  bun: "latest"
+  deno: "latest"
+  
+# Mise global tools
+mise_global_tools:
+  - direnv
+  - usage
+  - yarn
+  - uv  # Fast Python package installer
+
+# Theme colors (for reference in configs)
+theme:
+  spaceduck:
+    background: "#0f111b"
+    foreground: "#ecf0c1"
+    purple: "#b3a1e6"
+    pink: "#ce6f8f"
+    green: "#5ccc96"
+    orange: "#e39400"
+    blue: "#00a3cc"
+    cyan: "#42b3c2"
+    yellow: "#f2ce00"
+  
+  onedark:
+    background: "#282c34"
+    foreground: "#abb2bf"
+    purple: "#c678dd"
+    pink: "#e06c75"
+    green: "#98c379"
+    orange: "#d19965"
+    blue: "#61afef"
+    cyan: "#56b6c2"
+    yellow: "#e5c07b"
+
+# Fonts
+fonts:
+  primary: "Hack"
+  fallback: "FiraCode"
+  nerd_fonts:
+    - "Hack Nerd Font"
+    - "FiraCode Nerd Font"
+    - "JetBrainsMono Nerd Font"
+    - "CascadiaCode Nerd Font"
+  emoji: "Noto Color Emoji"
+  symbols: "Symbols Nerd Font Mono"
+  
+  # Fira Code ligature settings
+  fira_code_stylistic_sets:
+    - ss02  # >= <= != == === !== 
+    - ss03  # ->
+    - ss04  # >=
+    - ss05  # @
+    - ss08  # == === != !==
+  fira_code_character_variants:
+    - cv15  # &
+    - cv24  # >=
+    - cv29  # {}
+
+# Platform-specific paths (for reference in templates)
+paths:
+  windows:
+    config: "%USERPROFILE%\\.config"
+    data: "%USERPROFILE%\\.local\\share"
+    state: "%USERPROFILE%\\.local\\state"
+    cache: "%USERPROFILE%\\.cache"
+    scoop: "%USERPROFILE%\\scoop"
+    mise: "%USERPROFILE%\\.local\\share\\mise"
+  
+  unix:
+    config: "~/.config"
+    data: "~/.local/share"
+    state: "~/.local/state"
+    cache: "~/.cache"
+    mise: "~/.local/share/mise"
+
+# SSH and authentication
+ssh:
+  agent: "1password"  # Use 1Password SSH agent
+  windows_pipe: "\\\\.\\pipe\\openssh-ssh-agent"
+  unix_socket: "~/.1password/agent.sock"
+
+# Feature toggles
+features:
+  install_packages: true
+  install_runtimes: true
+  setup_ssh: true
+  setup_1password: true
+  setup_wsl: true  # Windows only
+  setup_symlinks: true  # Windows Developer Mode required

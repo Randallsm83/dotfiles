@@ -1,0 +1,91 @@
+# Chezmoi ignore patterns
+# https://www.chezmoi.io/reference/special-files-and-directories/chezmoiignore/
+
+# Development and documentation files (never apply to home directory)
+README.md
+LICENSE
+TESTING.md
+*.Tests.ps1
+*.example
+CHEZMOI_MIGRATION_GUIDE.md
+MIGRATION_SUMMARY.md
+STOW_VS_CHEZMOI.md
+
+# Bootstrap scripts (stored in repo root, not applied to home)
+bootstrap.ps1
+setup.sh
+
+# Git metadata
+.git/
+.gitignore
+.gitattributes
+
+# Editor artifacts
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+{{- /* Platform-specific exclusions */ -}}
+
+{{- if eq .chezmoi.os "windows" }}
+# Exclude Unix-specific files on Windows
+
+# Unix shell configs
+.zshrc
+.zshrc.d/
+.zshenv
+.bashrc
+.bash_profile
+.profile
+
+# Unix-specific scripts
+*.sh
+.chezmoiscripts/**/run_*.sh.tmpl
+.chezmoiscripts/**/run_*.sh
+
+# Unix config directories
+.config/systemd/
+.config/i3/
+.config/sway/
+.config/hyprland/
+
+# Unix-specific dotfiles
+.xinitrc
+.Xresources
+.tmux.conf
+
+{{- else }}
+# Exclude Windows-specific files on Unix
+
+# Windows PowerShell
+Documents/
+AppData/
+
+# Windows-specific scripts
+*.ps1
+.chezmoiscripts/**/run_*.ps1.tmpl
+.chezmoiscripts/**/run_*.ps1
+
+# Windows configs
+.wslconfig
+
+# Windows Terminal
+AppData/Local/Packages/Microsoft.WindowsTerminal_*/
+
+{{- end }}
+
+{{- /* WSL-specific exclusions */ -}}
+{{- if not (and (eq .chezmoi.os "linux") (or (.chezmoi.kernel.osrelease | lower | contains "microsoft") (.chezmoi.kernel.osrelease | lower | contains "wsl"))) }}
+# Exclude WSL config if not on WSL
+.wslconfig
+{{- end }}
+
+{{- /* macOS-specific exclusions */ -}}
+{{- if ne .chezmoi.os "darwin" }}
+# Exclude macOS-specific files on non-macOS
+.config/karabiner/
+.config/hammerspoon/
+Library/
+{{- end }}

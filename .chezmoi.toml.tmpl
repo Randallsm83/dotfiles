@@ -1,0 +1,87 @@
+# Chezmoi configuration file
+# https://www.chezmoi.io/reference/configuration-file/
+
+{{- $email := "your.email@example.com" -}}
+{{- $name := "Randall" -}}
+{{- $github_username := "Randallsm83" -}}
+
+{{- /* Detect platform */ -}}
+{{- $is_windows := eq .chezmoi.os "windows" -}}
+{{- $is_darwin := eq .chezmoi.os "darwin" -}}
+{{- $is_linux := eq .chezmoi.os "linux" -}}
+{{- $is_wsl := and $is_linux (or (.chezmoi.kernel.osrelease | lower | contains "microsoft") (.chezmoi.kernel.osrelease | lower | contains "wsl")) -}}
+
+[data]
+    email = {{ $email | quote }}
+    name = {{ $name | quote }}
+    github_username = {{ $github_username | quote }}
+    
+    # Platform flags
+    is_windows = {{ $is_windows }}
+    is_darwin = {{ $is_darwin }}
+    is_linux = {{ $is_linux }}
+    is_wsl = {{ $is_wsl }}
+    
+    # XDG Base Directory Specification
+    # https://specifications.freedesktop.org/basedir-spec/basedir-spec-latest.html
+{{- if $is_windows }}
+    xdg_config_home = "{{ .chezmoi.homeDir }}\\.config"
+    xdg_data_home = "{{ .chezmoi.homeDir }}\\.local\\share"
+    xdg_state_home = "{{ .chezmoi.homeDir }}\\.local\\state"
+    xdg_cache_home = "{{ .chezmoi.homeDir }}\\.cache"
+{{- else }}
+    xdg_config_home = "{{ .chezmoi.homeDir }}/.config"
+    xdg_data_home = "{{ .chezmoi.homeDir }}/.local/share"
+    xdg_state_home = "{{ .chezmoi.homeDir }}/.local/state"
+    xdg_cache_home = "{{ .chezmoi.homeDir }}/.cache"
+{{- end }}
+
+    # Package manager preferences
+{{- if $is_windows }}
+    package_manager_cli = "scoop"
+    package_manager_gui = "winget"
+    runtime_manager = "mise"
+{{- else if $is_darwin }}
+    package_manager = "homebrew"
+    runtime_manager = "mise"
+{{- else }}
+    package_manager = "mise"
+    runtime_manager = "mise"
+{{- end }}
+
+    # Shell preferences
+{{- if $is_windows }}
+    shell = "pwsh"
+    shell_profile = "{{ .chezmoi.homeDir }}\\Documents\\PowerShell\\Microsoft.PowerShell_profile.ps1"
+{{- else }}
+    shell = "zsh"
+    shell_profile = "{{ .chezmoi.homeDir }}/.zshrc"
+{{- end }}
+
+    # Theme and styling
+    theme = "spaceduck"  # Primary: spaceduck, Secondary: onedark, gruvbox-material
+    font = "Hack"
+    font_fallback = "FiraCode"
+    nerd_font = "Hack Nerd Font"
+    
+    # Feature flags
+    install_packages = true
+    install_runtimes = true
+    setup_git_ssh = true
+    setup_1password = true
+
+[edit]
+    command = "nvim"
+
+[diff]
+    command = "delta"
+    args = ["--paging=never"]
+
+[merge]
+    command = "nvim"
+    args = ["-d"]
+
+# Git repository settings
+[git]
+    autoCommit = false
+    autoPush = false
