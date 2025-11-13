@@ -1,0 +1,54 @@
+# fd ignore patterns
+# These patterns are excluded from fd searches
+# https://github.com/sharkdp/fd
+
+# Version control
+.git/
+.svn/
+.hg/
+
+# Dependencies
+node_modules/
+bower_components/
+vendor/
+target/
+dist/
+build/
+
+# Caches
+.cache/
+__pycache__/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+*.pyc
+*.pyo
+
+# Editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Build artifacts
+*.o
+*.obj
+*.exe
+*.dll
+*.so
+*.dylib
+
+# Logs
+*.log
+logs/
+
+# Temporary files
+tmp/
+temp/
+*.tmp

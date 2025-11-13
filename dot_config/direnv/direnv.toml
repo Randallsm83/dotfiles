@@ -1,0 +1,21 @@
+# direnv configuration
+# https://direnv.net/man/direnv.toml.1.html
+
+[global]
+# Disable hints about RC file changes
+warn_timeout = "5s"
+hide_env_diff = false
+
+# Whitelist directories that can use direnv
+# Uncomment and customize as needed:
+# [whitelist]
+# prefix = [ "/home/user/code" ]
+# exact = [ "/home/user/project1" ]
+
+[bash]
+# Bash-specific options
+extra_args = []
+
+[whitelist]
+# Trust all directories by default (you can restrict this)
+# prefix = []

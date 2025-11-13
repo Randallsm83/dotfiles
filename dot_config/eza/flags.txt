@@ -1,0 +1,17 @@
+# eza default flags
+# https://github.com/eza-community/eza
+
+# Display options
+--icons
+--git
+--group-directories-first
+
+# Colors
+--color=auto
+--color-scale
+
+# Sorting
+--sort=name
+
+# Grid options
+--grid
