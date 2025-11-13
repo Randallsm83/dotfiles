@@ -1,0 +1,127 @@
+{{- if eq .chezmoi.os "windows" -}}
+#!/usr/bin/env pwsh
+#
+# Install packages on Windows
+# This script runs once after chezmoi initialization
+
+$ErrorActionPreference = 'Continue'  # Continue on non-critical errors
+$ProgressPreference = 'SilentlyContinue'
+
+# Status logging functions
+function Write-Status {
+    param(
+        [string]$Message,
+        [ValidateSet('Info', 'Success', 'Warning', 'Error')]
+        [string]$Type = 'Info'
+    )
+    
+    $colors = @{ Info = 'Cyan'; Success = 'Green'; Warning = 'Yellow'; Error = 'Red' }
+    $symbols = @{ Info = 'ℹ'; Success = '✓'; Warning = '⚠'; Error = '✗' }
+    
+    Write-Host "$($symbols[$Type]) " -ForegroundColor $colors[$Type] -NoNewline
+    Write-Host $Message
+}
+
+function Test-CommandExists {
+    param([string]$Command)
+    $null -ne (Get-Command $Command -ErrorAction SilentlyContinue)
+}
+
+Write-Host "╔══════════════════════════════════════════╗" -ForegroundColor Cyan
+Write-Host "║       Installing Windows Packages       ║" -ForegroundColor Cyan  
+Write-Host "╚══════════════════════════════════════════╝" -ForegroundColor Cyan
+Write-Host ""
+
+# Install scoop packages (CLI tools)
+if (Test-CommandExists scoop) {
+    Write-Status "Installing scoop packages..." -Type Info
+    
+    $scoopPackages = @(
+{{- range .scoop_packages }}
+        "{{ . }}"{{- if ne . (index $.scoop_packages (sub (len $.scoop_packages) 1)) }},{{ end }}
+{{- end }}
+    )
+    
+    foreach ($package in $scoopPackages) {
+        try {
+            if (-not (scoop list $package 2>$null)) {
+                Write-Status "Installing $package via scoop..." -Type Info
+                scoop install $package
+            } else {
+                Write-Status "$package already installed via scoop" -Type Success
+            }
+        } catch {
+            Write-Status "Failed to install $package via scoop: $_" -Type Warning
+        }
+    }
+} else {
+    Write-Status "Scoop not found, skipping CLI package installation" -Type Warning
+}
+
+# Install winget packages (GUI apps)
+if (Test-CommandExists winget) {
+    Write-Status "Installing winget packages..." -Type Info
+    
+    $wingetPackages = @(
+{{- range .winget_packages }}
+        "{{ . }}"{{- if ne . (index $.winget_packages (sub (len $.winget_packages) 1)) }},{{ end }}
+{{- end }}
+    )
+    
+    foreach ($package in $wingetPackages) {
+        try {
+            Write-Status "Installing $package via winget..." -Type Info
+            winget install --id $package --source winget --accept-package-agreements --accept-source-agreements --silent
+        } catch {
+            Write-Status "Failed to install $package via winget: $_" -Type Warning
+        }
+    }
+} else {
+    Write-Status "Winget not found, skipping GUI package installation" -Type Warning
+}
+
+# Install mise and language runtimes
+if (-not (Test-CommandExists mise)) {
+    Write-Status "Installing mise..." -Type Info
+    try {
+        if (Test-CommandExists scoop) {
+            scoop install mise
+        } else {
+            Write-Status "Scoop not available, skipping mise installation" -Type Warning
+        }
+    } catch {
+        Write-Status "Failed to install mise: $_" -Type Warning
+    }
+}
+
+if (Test-CommandExists mise) {
+    Write-Status "Installing language runtimes via mise..." -Type Info
+    
+    # Install runtimes
+{{- range $runtime, $version := .mise_runtimes }}
+    try {
+        Write-Status "Installing {{ $runtime }}@{{ $version }}..." -Type Info
+        mise use -g {{ $runtime }}@{{ $version }}
+    } catch {
+        Write-Status "Failed to install {{ $runtime }}: $_" -Type Warning
+    }
+{{- end }}
+    
+    # Install global tools
+{{- range .mise_global_tools }}
+    try {
+        Write-Status "Installing {{ . }}..." -Type Info
+        mise use -g {{ . }}
+    } catch {
+        Write-Status "Failed to install {{ . }}: $_" -Type Warning
+    }
+{{- end }}
+    
+    Write-Status "Running mise install to ensure all tools are available..." -Type Info
+    mise install 2>$null
+}
+
+Write-Host ""
+Write-Status "Package installation completed!" -Type Success
+Write-Host ""
+{{- end }}
