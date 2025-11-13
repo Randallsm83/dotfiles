@@ -1,0 +1,37 @@
+# Mise configuration
+# https://mise.jdx.dev/configuration.html
+
+[tools]
+{{- range $runtime, $version := .mise_runtimes }}
+{{ $runtime }} = "{{ $version }}"
+{{- end }}
+
+{{- if ne .chezmoi.os "windows" }}
+# CLI tools (Unix only - Windows uses scoop)
+{{- range .mise_cli_tools }}
+"{{ . }}" = "latest"
+{{- end }}
+{{- end }}
+
+# Global tools
+{{- range .mise_global_tools }}
+"{{ . }}" = "latest"
+{{- end }}
+
+[settings]
+experimental = true
+yes = false
+quiet = false
+verbose = false
+log_level = "info"
+always_keep_download = false
+always_keep_install = false
+plugin_autoupdate_last_check_duration = "7d"
+disable_tools = []
+legacy_version_file = true
+asdf_compat = false
+plugin_repository_last_check_duration = "7d"
+paranoid = false
+shorthands_file = "~/.config/mise/shorthands.toml"
+disable_default_shorthands = false
+disable_hints = []

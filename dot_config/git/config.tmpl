@@ -1,0 +1,133 @@
+# Git configuration
+# Managed by chezmoi - https://www.chezmoi.io/
+
+[user]
+	name = {{ .user.name }}
+	email = {{ .user.email }}
+
+[core]
+	editor = nvim
+{{- if eq .chezmoi.os "windows" }}
+	# Windows: Use delta for paging (installed via scoop)
+	pager = delta
+	# Windows: Use native OpenSSH for 1Password SSH agent integration
+	sshCommand = C:/Windows/System32/OpenSSH/ssh.exe
+	# Windows: Normalize line endings (LF in repo, CRLF on checkout)
+	autocrlf = true
+	# Windows: Disable file mode tracking (no chmod)
+	filemode = false
+	# Windows: Enable long path support (>260 characters)
+	longpaths = true
+{{- else }}
+	# Unix: Use delta for paging
+	pager = delta
+	# Unix: Use system ssh
+	sshCommand = ssh
+	# Unix: Keep LF line endings
+	autocrlf = input
+{{- end }}
+
+[init]
+	defaultBranch = main
+
+[push]
+	default = simple
+	autoSetupRemote = true
+
+[pull]
+	rebase = true
+
+[fetch]
+	prune = true
+
+[grep]
+	lineNumber = true
+
+[branch]
+	sort = -committerdate
+
+[merge]
+	tool = nvim
+	conflictstyle = zdiff3
+
+[mergetool]
+	keepBackup = false
+	prompt = false
+
+[mergetool "nvim"]
+	cmd = nvim -d -c \"wincmd l\" -c \"norm ]c\" \"$LOCAL\" \"$MERGED\" \"$REMOTE\"
+
+[diff]
+	algorithm = histogram
+	colorMoved = default
+
+[rebase]
+	autosquash = true
+	autostash = true
+
+[log]
+	date = relative
+
+[url "git@github.com:"]
+	insteadOf = https://github.com/
+
+{{- if eq .chezmoi.os "windows" }}
+[credential]
+	# Windows: Use Git Credential Manager
+	helper = manager
+{{- end }}
+
+# Delta (diff tool) configuration
+[delta]
+	navigate = true
+	line-numbers = true
+	side-by-side = false
+	syntax-theme = OneHalfDark
+	features = decorations
+
+[delta "decorations"]
+	commit-decoration-style = bold yellow box
+	file-style = bold yellow
+	file-decoration-style = yellow box
+	hunk-header-decoration-style = cyan box
+
+[interactive]
+	diffFilter = delta --color-only
+
+# Color configuration (onedark-inspired)
+[color]
+	ui = auto
+	diff = auto
+	status = auto
+	branch = auto
+
+[color "diff"]
+	meta = yellow bold
+	frag = magenta bold
+	commit = yellow bold
+	old = red bold
+	new = green bold
+	whitespace = red reverse
+
+[color "status"]
+	added = green bold
+	changed = yellow bold
+	untracked = red bold
+
+[color "branch"]
+	current = yellow bold
+	local = green bold
+	remote = cyan bold
+
+# 1Password SSH Agent
+{{- if .features.setup_1password }}
+{{- if eq .chezmoi.os "windows" }}
+[core]
+	# Windows: 1Password SSH agent via named pipe
+	sshCommand = C:/Windows/System32/OpenSSH/ssh.exe -F /dev/null -o IdentityAgent=\\\\.\\pipe\\openssh-ssh-agent
+{{- else }}
+[core]
+	# Unix: 1Password SSH agent via socket
+	sshCommand = ssh -o IdentityAgent=~/.1password/agent.sock
+{{- end }}
+{{- end }}

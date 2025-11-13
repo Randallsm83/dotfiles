@@ -1,0 +1,16 @@
+# Bat configuration
+# https://github.com/sharkdp/bat
+
+# Theme (matching onedark color scheme)
+--theme="OneHalfDark"
+
+# Show line numbers, Git modifications and file header
+--style="numbers,changes,header"
+
+# Use italic text
+--italic-text=always
+
+# Map file extensions
+--map-syntax="*.ino:C++"
+--map-syntax=".ignore:Git Ignore"
+--map-syntax="*.jenkinsfile:Groovy"
