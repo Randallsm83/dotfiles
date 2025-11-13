@@ -1,0 +1,49 @@
+# ripgrep configuration
+# https://github.com/BurntSushi/ripgrep/blob/master/GUIDE.md#configuration-file
+
+# Search hidden files and directories
+--hidden
+
+# Follow symbolic links
+--follow
+
+# Smart case search (case-insensitive if all lowercase)
+--smart-case
+
+# Show line numbers
+--line-number
+
+# Use colors in output
+--colors=path:fg:cyan
+--colors=path:style:bold
+--colors=line:fg:yellow
+--colors=line:style:bold
+--colors=match:fg:green
+--colors=match:style:bold
+
+# Glob patterns to exclude
+--glob=!.git/
+--glob=!node_modules/
+--glob=!target/
+--glob=!dist/
+--glob=!build/
+--glob=!.cache/
+--glob=!*.pyc
+--glob=!*.pyo
+--glob=!__pycache__/
+--glob=!*.swp
+--glob=!*.swo
+--glob=!*~
+--glob=!.DS_Store
+--glob=!Thumbs.db
+--glob=!.vscode/
+--glob=!.idea/
+--glob=!*.min.js
+--glob=!*.min.css
+--glob=!package-lock.json
+--glob=!yarn.lock
+--glob=!Cargo.lock
+
+# File type associations
+--type-add=web:*.{html,css,js,jsx,ts,tsx,vue}
+--type-add=config:*.{json,yaml,yml,toml,ini,conf}
