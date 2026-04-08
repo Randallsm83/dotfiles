@@ -12,7 +12,7 @@
 
     <Principal id="Author">
 
-      <UserId>S-1-5-21-459282282-1938389383-1025489529-1000</UserId>
+      <UserId>{{ .chezmoi.hostname }}\{{ .chezmoi.username }}</UserId>
 
       <LogonType>InteractiveToken</LogonType>
 
@@ -58,7 +58,7 @@
 
     <Exec>
 
-      <Command>C:\Users\Randall\scoop\apps\msiafterburner\current\MSIAfterburner.exe</Command>
+      <Command>{{ .chezmoi.homeDir }}\scoop\apps\msiafterburner\current\MSIAfterburner.exe</Command>
 
       <Arguments>/s</Arguments>
 

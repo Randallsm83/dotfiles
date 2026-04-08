@@ -4,11 +4,13 @@
 
   <RegistrationInfo>
 
-    <Date>2025-10-19T14:03:46.3860435</Date>
+    <Date>2025-10-27T09:52:40.559-07:00</Date>
 
-    <Author>HAL9K-ALT\Randall</Author>
+    <Author>{{ .chezmoi.hostname }}\{{ .chezmoi.username }}</Author>
 
-    <URI>\UtilCacheCleaner</URI>
+    <Description>Start FanControl at startup</Description>
+
+    <URI>\FanControl</URI>
 
   </RegistrationInfo>
 
@@ -16,7 +18,9 @@
 
     <Principal id="Author">
 
-      <GroupId>S-1-5-32-544</GroupId>
+      <UserId>{{ .chezmoi.hostname }}\{{ .chezmoi.username }}</UserId>
+
+      <LogonType>InteractiveToken</LogonType>
 
       <RunLevel>HighestAvailable</RunLevel>
 
@@ -26,11 +30,15 @@
 
   <Settings>
 
-    <DisallowStartIfOnBatteries>true</DisallowStartIfOnBatteries>
+    <DisallowStartIfOnBatteries>false</DisallowStartIfOnBatteries>
 
-    <StopIfGoingOnBatteries>true</StopIfGoingOnBatteries>
+    <StopIfGoingOnBatteries>false</StopIfGoingOnBatteries>
+
+    <ExecutionTimeLimit>PT0S</ExecutionTimeLimit>
 
     <MultipleInstancesPolicy>IgnoreNew</MultipleInstancesPolicy>
+
+    <Priority>3</Priority>
 
     <IdleSettings>
 
@@ -48,7 +56,7 @@
 
     <LogonTrigger>
 
-      <UserId>HAL9K-ALT\Randall</UserId>
+      <UserId>{{ .chezmoi.hostname }}\{{ .chezmoi.username }}</UserId>
 
     </LogonTrigger>
 
@@ -58,11 +66,9 @@
 
     <Exec>
 
-      <Command>C:\Windows\System32\conhost.exe</Command>
+      <Command>FanControl</Command>
 
-      <Arguments>--headless pwsh.exe -WindowStyle Hidden -NoProfile -NonInteractive -File "C:\Users\Randall\.local\utilities\UtilCacheCleaner.ps1"</Arguments>
-
-      <WorkingDirectory>C:\Users\Randall\.local\utilities\</WorkingDirectory>
+      <WorkingDirectory>{{ .chezmoi.homeDir }}\Downloads\FanControl_245_net_8_0\</WorkingDirectory>
 
     </Exec>
 

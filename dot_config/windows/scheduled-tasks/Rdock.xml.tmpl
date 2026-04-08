@@ -6,7 +6,7 @@
 
     <Date>2026-01-30T09:31:40.1172223</Date>
 
-    <Author>HAL9K-ALT\Randall</Author>
+    <Author>{{ .chezmoi.hostname }}\{{ .chezmoi.username }}</Author>
 
     <URI>\Rdock</URI>
 
@@ -16,7 +16,7 @@
 
     <Principal id="Author">
 
-      <UserId>S-1-5-21-459282282-1938389383-1025489529-1000</UserId>
+      <UserId>{{ .chezmoi.hostname }}\{{ .chezmoi.username }}</UserId>
 
       <LogonType>InteractiveToken</LogonType>
 
@@ -50,7 +50,7 @@
 
     <LogonTrigger>
 
-      <UserId>HAL9K-ALT\Randall</UserId>
+      <UserId>{{ .chezmoi.hostname }}\{{ .chezmoi.username }}</UserId>
 
     </LogonTrigger>
 
@@ -60,7 +60,7 @@
 
     <Exec>
 
-      <Command>C:\Users\Randall\projects\rdock\target\release\rdock.exe</Command>
+      <Command>{{ .chezmoi.homeDir }}\projects\rdock\target\release\rdock.exe</Command>
 
     </Exec>
 
